@@ -22,7 +22,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### install init.d scripts
+
+1. copy ext/tochkad, ext/tochka-miniui into /etc/init.d
+2. do chmod +x onto both
+3. do 'update-rc.d <name> defaults' to both
 
 ## Development
 
