@@ -45,7 +45,11 @@ module Tochka
       @mutex = Mutex.new
       @cv = ConditionVariable.new
 
-      @pf = PidFile.new(:piddir => "/var/run", :pidfile => "tochkad.pid")
+      begin
+        @pf = PidFile.new(:piddir => "/var/run", :pidfile => "tochkad.pid")
+      rescue => e
+        $log.err("pid file is in trouble (#{e})")
+      end
     end
 
     def run

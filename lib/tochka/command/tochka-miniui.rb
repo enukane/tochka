@@ -52,7 +52,11 @@ module Tochka
       init_sdl()
       init_var()
 
-      @pf = PidFile.new(:piddir=> "/var/run", :pidfile => "tochka-miniui.pid")
+      begin
+        @pf = PidFile.new(:piddir=> "/var/run", :pidfile => "tochka-miniui.pid")
+      rescue => e
+        $log.err("pid file is in trouble (#{e})")
+      end
     end
 
     def draw_lattice
