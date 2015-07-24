@@ -1,8 +1,10 @@
 module Tochka
   require "open3"
 
+  require "tochka/athsurvey"
+
   class Wlan
-    attr_reader :duration, :current_channel, :file_size, :channel_walk
+    attr_reader :duration, :current_channel, :file_size, :channel_walk, :utilization, :utilization_channel
     CHAN = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
       34, 36, 38, 40, 42, 44, 46, 48,
       52, 56, 60, 64,
@@ -15,6 +17,7 @@ module Tochka
       @ifname = ifname || DEFAULT_IFNAME
       init_status()
       @black_list = []
+      @athsurvey = Tochka::Athsurvey.new(@ifname)
     end
 
     def run_capture fpath
@@ -33,10 +36,14 @@ module Tochka
           @file_size = File.size?(fpath) || 0
 
           # do something here to run before channel transition
+          ary = @athsurvey.current_data()
+          @utilization_channel = ary[0]
+          @utilization = ary[3]
 
+          prev_channel = @current_channel
           @current_chanenl = move_channel(@current_channel)
           @channel_walk += 1
-          $log.debug("channel moved to #{@current_channel} (dur=#{@duration}, size=#{@file_size}, walk=#{@channel_walk})")
+          $log.debug("channel moved to #{@current_channel} from #{prev_channel} (dur=#{@duration}, size=#{@file_size}, walk=#{@channel_walk}, utilization=#{@utilization} uch=#{@utilization_channel})")
           end
         rescue => e
           $log.warn("run_capture detected unknown error (#{e})")

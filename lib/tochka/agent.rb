@@ -4,7 +4,7 @@ module Tochka
   require "tochka/log"
 
   class Agent
-    attr_reader :state, :file_name, :file_size, :duration, :current_channel, :frame_count, :channel_walk
+    attr_reader :state, :file_name, :file_size, :duration, :current_channel, :frame_count, :channel_walk, :utilization, :utilization_channel
     SOCKPATH="/var/run/captured.sock"
 
     CMD_GET_STATUS="get_status"
@@ -24,6 +24,8 @@ module Tochka
       @current_channel = 0
       @channel_walk = 0
       @frame_count = 0
+      @utilization = 0
+      @utilization_channel = 0
     end
 
     def get_status
@@ -106,6 +108,8 @@ module Tochka
       @current_channel = msg["current_channel"]
       @channel_walk = msg["channel_walk"]
       @frame_count = msg["frame_count"]
+      @utilization = msg["utilization"]
+      @utilization_channel = msg["utilization_channel"]
     end
   end
 

@@ -96,7 +96,7 @@ module Tochka
       draw_text(2, 4, "Current Channel")
       draw_text(2, 5, "Channel Walk")
       draw_text(2, 6, "Size per sec")
-      draw_text(2, 7, "Frame Count")
+      draw_text(2, 7, "Utilization")
     end
 
     def draw_base_text_level4
@@ -202,7 +202,7 @@ module Tochka
       draw_var(2, 4, @current_channel)
       draw_var(2, 5, @channel_walk)
       draw_var(2, 6, file_size_to_h(@size_per_sec))
-      draw_var(2, 7, @frame_count)
+      draw_var(2, 7, "#{@utilization}% (#{@utilization_channel}ch)")
 
       draw_var(3, 0, "#{@disk_usage}GB (#{@disk_usage_perc}%)")
       draw_var(3, 1, "#{@mem_usage}MB (#{@mem_usage_perc}%)")
@@ -323,6 +323,8 @@ module Tochka
       @current_channel = @ca.current_channel
       @channel_walk = @ca.channel_walk
       @frame_count = @ca.frame_count
+      @utilization = @ca.utilization
+      @utilization_channel = @ca.utilization_channel
 
       @last_update_time = Time.now.to_i
       @last_full_update_time = Time.now.to_i
@@ -368,6 +370,8 @@ module Tochka
       @channel_walk = @ca.channel_walk
       @frame_count = @ca.frame_count
       @size_per_sec = @file_size / @duration if @duration != 0
+      @utilization = @ca.utilization
+      @utilization_channel = @ca.utilization_channel
     end
 
     def get_date_str

@@ -132,12 +132,14 @@ module Tochka
 
     def status_hash
       return {
-        "state"           => @state,
-        "file_name"       => @file_name,
-        "file_size"       => @wlan.file_size,
-        "duration"        => @wlan.duration,
-        "current_channel" => @wlan.current_channel,
-        "channel_walk"    => @wlan.channel_walk,
+        "state"               => @state,
+        "file_name"           => @file_name,
+        "file_size"           => @wlan.file_size,
+        "duration"            => @wlan.duration,
+        "current_channel"     => @wlan.current_channel,
+        "channel_walk"        => @wlan.channel_walk,
+        "utilization"         => @wlan.utilization,
+        "utilization_channel" => @wlan.utilization_channel,
       }
     end
 
