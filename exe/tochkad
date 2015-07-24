@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+
+require "tochka"
+require "optparse"
+
+opt = OptionParser.new
+OPTS=Tochka::Daemon.default_options
+
+opt.on('-i', "--interface [IFNAME=#{Tochka::Daemon::DEFAULT_IFNAME}]",
+       "interface to capture") {|v|
+  OPTS[:ifname] = v || Tochka::Daemon::DEFAULT_IFNAME
+}
+
+opt.on('-c', "--cap-dir [CAP_PATH=#{Tochka::Daemon::DEFAULT_CAP_PATH}]",
+       "capture directory") {|v|
+  OPTS[:cap_path] = v || TOchka::Daemon::DEFAULT_CAP_PATH
+}
+
+opt.on('-l', "--log-file [LOG_FILE=STDOUT]",
+       "log output file (accepts 'STDOUT', 'STDERR')") {|v|
+  OPTS[:log_file] = v
+}
+
+(class<<self;self;end).module_eval do
+  define_method(:usage) do |msg|
+    puts opt.to_s
+    puts "error: #{msg}" if msg
+    exit 1
+  end
+end
+
+begin
+  rest = opt.parse(ARGV)
+  if rest.length != 0
+    usage nil
+  end
+rescue
+  usage $!.to_s
+end
+
+# check root priviledge
+
+$log = Log.new(:output => OPTS[:log_file])
+Tochka::Daemon.new(OPTS[:ifname], OPTS[:cap_path]).run

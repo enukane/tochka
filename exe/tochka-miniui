@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+require "tochka"
+require "optparse"
+
+opt = OptionParser.new
+OPTS=Tochka::TochkaMiniUI.default_options
+
+opt.on('-f', "--font [FONT_PATH]", "font to use (default: #{Tochka::TochkaMiniUI.default_options[:font_path]})") {|v|
+  OPTS[:font_path] = v
+}
+
+opt.on('-l', "--log-file [LOG_FILE=STDOUT]",
+       "log output file (accepts 'STDOUT', 'STDERR')") {|v|
+  OPTS[:log_file] = v
+}
+
+(class<<self;self;end).module_eval do
+  define_method(:usage) do |msg|
+    puts opt.to_s
+    puts "error: #{msg}" if msg
+    exit 1
+  end
+end
+
+begin
+  res = opt.parse(ARGV)
+  if res.length != 0
+    usage nil
+  end
+rescue
+  usage $!.to_s
+end
+
+$log = Log.new(:output => OPTS[:log_file])
+Tochka::TochkaMiniUI.new(OPTS[:font_path]).run
