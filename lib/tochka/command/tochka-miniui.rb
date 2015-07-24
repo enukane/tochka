@@ -1,6 +1,7 @@
 module Tochka
   require "sdl"
   require "socket"
+  require "pidfile"
 
   class TochkaMiniUI
     DEBUG=true
@@ -50,6 +51,8 @@ module Tochka
       check_priviledge() # need to be root
       init_sdl()
       init_var()
+
+      @pf = PidFile.new(:piddir=> "/var/run", :pidfile => "tochka-miniui.pid")
     end
 
     def draw_lattice

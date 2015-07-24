@@ -31,4 +31,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'wiringpi', "~> 2.0.0"
   spec.add_dependency 'rubysdl', "~> 2.2.0" # requires sge, ttf enabled
+  spec.add_dependency 'pidfile', "~> 0.3.0"
 end

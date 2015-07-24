@@ -2,6 +2,7 @@ module Tochka
   require "socket"
   require "json"
   require "thread"
+  require "pidfile"
 
   require "tochka/channel"
   require "tochka/wlan"
@@ -43,6 +44,8 @@ module Tochka
 
       @mutex = Mutex.new
       @cv = ConditionVariable.new
+
+      @pf = PidFile.new(:piddir => "/var/run", :pidfile => "tochkad.pid")
     end
 
     def run
