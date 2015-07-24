@@ -6,7 +6,7 @@ module Tochka
     DEBUG=true
 
     DEFAULT_FONT_PATH="/usr/share/fonts/truetype/freefont/FreeSansBold.ttf"
-    DEFAULT_LOG_FILE="/var/log/tochk-miniui.log"
+    DEFAULT_LOG_FILE="/var/log/tochka-miniui.log"
 
     WIDTH=320
     HEIGHT=240
