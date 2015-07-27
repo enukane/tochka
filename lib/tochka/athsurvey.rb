@@ -88,7 +88,7 @@ module Tochka
     end
 
     def get_survey_dump
-      return `iw #{@ifname} survey dump`
+      return `iw #{@ifname} survey dump | grep -A 4 "in use"`
     end
 
     def fto2f f
