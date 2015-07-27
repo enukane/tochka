@@ -56,9 +56,9 @@ module Tochka
       4980  => 194,
     }
 
-    REG_FREQ=/^frequency:\s+(\d+) /
-    REG_ACTIVE=/^channel active time:\s+(\d+) (|m)s$/
-    REG_BUSY=/^channel busy time:\s+(\d+) (|m)s$/
+    REG_FREQ=/^\s*frequency:\s+(\d+) /
+    REG_ACTIVE=/^\s*channel active time:\s+(\d+) (|m)s$/
+    REG_BUSY=/^\s*channel busy time:\s+(\d+) (|m)s$/
 
     def initialize ifname
       @ifname = ifname
@@ -82,7 +82,7 @@ module Tochka
           busy *= 1000 if $2 != "m"
         end
       end
-      return [0, 0, 0] if active == 0
+      return [0, 0, 0, 0] if active == 0
 
       return [channel, active, busy, fto2f(busy.to_f * 100 / active.to_f) ]
     end
