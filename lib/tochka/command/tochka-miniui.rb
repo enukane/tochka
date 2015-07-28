@@ -218,7 +218,7 @@ module Tochka
       prev = Time.now.to_i
 
       while true
-        sleep 0.1
+        sleep 0.05
 
         while event = SDL::Event.poll
         end
@@ -245,6 +245,7 @@ module Tochka
             @stop_count = 2
           else
             @stop_count = 0
+            @pitft_button.backlight_off()
           end
         elsif buttons[3] == true
           case @stop_count
@@ -253,6 +254,7 @@ module Tochka
             @stop_count = 3
           else
             @stop_count = 0
+            @pitft_button.backlight_on()
           end
         end
 

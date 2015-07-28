@@ -17,6 +17,7 @@ module Tochka
       end
 
       @prev = [false, false, false, false]
+
     end
 
     def dummy_init
@@ -30,6 +31,8 @@ module Tochka
         @io.pin_mode(pin, PIN_MODE_INPUT)
         @io.pull_up_dn_control(pin, WiringPi::PUD_UP)
       end
+
+      backlight_on()
     end
 
     def button_all
@@ -67,9 +70,23 @@ module Tochka
       return edges
     end
 
+    def backlight_on
+      set_backlight(1)
+    end
+
+    def backlight_off
+      set_backlight(0)
+    end
+
     private
     def read_button pin
       return @io.digital_read(pin) == 0
+    end
+
+    def set_backlight val
+      File.open("/sys/class/gpio/gpio508/value", "w") do |f|
+        f.write(val.to_s)
+      end
     end
   end
 end
