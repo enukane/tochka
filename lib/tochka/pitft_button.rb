@@ -32,6 +32,11 @@ module Tochka
         @io.pull_up_dn_control(pin, WiringPi::PUD_UP)
       end
 
+      if !File.exists?("/sys/class/gpio/gpio508")
+        system("echo 508 > /sys/class/gpio/export")
+        system("echo out > /sys/class/gpio/gpio508/direction")
+      end
+
       backlight_on()
     end
 
@@ -87,6 +92,8 @@ module Tochka
       File.open("/sys/class/gpio/gpio508/value", "w") do |f|
         f.write(val.to_s)
       end
+    rescue => e
+      system("logger tochka-miniui failed with #{e}")
     end
   end
 end
