@@ -34,7 +34,7 @@ Or install it yourself as:
 
 Tochka provides with user interface to start/stop capture on top of PiTFT.
 
-![tochka-miniui](http://amber.glenda9.org/~enukane/images/tochka-miniui.jpg)
+![tochka-miniui](http://enukane.github.io/images/2015-08-31/tochka-miniui.jpg)
 
 TOUCHSCREEN is currently of NO USE. Just make yourself happy with moving cursor :).
 Use buttons instead: 4 buttons are "START", "STOP", "MODE1", "MODE2".
